@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rozi's Weather App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #e3cce9;
+        }
+        .container {
+            text-align: center;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        h1 {
+            color: rgb(97, 61, 119); /* Change this color to your desired value */
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px;
+            font-size: 16px;
+        }
+        button {
+            cursor: pointer;
+        }
+        #result {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Rozi's Weather App</h1>
+        <input type="text" id="city" placeholder="Enter city name" />
+        <button id="getWeather">Get Weather</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        document.getElementById('getWeather').addEventListener('click', () => {
+            const city = document.getElementById('city').value;
+            server_address = process.env.BACKEND_ADDRESS;
+            server_port = process.env.BACKEND_PORT;
+            fetch(`http://${server_address}:${server_port}/weather?city=${encodeURIComponent(city)}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('City not found');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    document.getElementById('result').innerHTML = `
+                        <h2>Weather in ${data.city}</h2>
+                        <p>Temperature: ${data.temperature}</p>
+                        <p>Condition: ${data.condition}</p>
+                    `;
+                })
+                .catch(error => {
+                    document.getElementById('result').innerHTML = `
+                        <p style="color: red;">${error.message}</p>
+                    `;
+                });
+        });
+    </script>
+</body>
+</html>
