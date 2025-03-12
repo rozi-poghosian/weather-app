@@ -1,7 +1,7 @@
 name: Testing 
 
 on:
-    workflow_dispatch
+    push
 
 jobs:
     Reading:
@@ -13,21 +13,28 @@ jobs:
         - name: Reading Readme 
           run: cat README.md
 
-        - name: Reading HTML
-          run: cat frontend/index.html
-
     Editing:
         runs-on: ubuntu-latest
         steps:
         - name: Checkout repo
           uses: actions/checkout@v4
+          with:
+            token: ${{ secrets.GITHUB_TOKEN }}
 
         - name: Editing readme
           run: echo "2nd new line" >> README.md
 
         - name: reading Readme 
           run: cat README.md 
-          
+
+        - name: Commit and Push
+          run: |
+            git config --global user.name "github-actions"
+            git config --global user.email "github-actions@github.com"
+            git add README.md
+            git commit -m adding new line
+            git push
+
     Rereading:
         runs-on: ubuntu-latest
         steps:
