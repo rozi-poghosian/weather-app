@@ -20,10 +20,10 @@ jobs:
         runs-on: ubuntu-latest
         steps:
         - name: Checkout repo
-          uses: actions/checkout@v4
+          run: actions/checkout@v4
 
         - name: Editing readme
-          uses: echo "2nd new line" >> README.md
+          run: echo "2nd new line" >> README.md
 
         - name: reading Readme 
           run: cat README.md 
