@@ -13,11 +13,29 @@ jobs:
         - name: Reading Readme 
           run: cat README.md
 
-        - name: Frontent folder content
-          run: ls -la frontend
-
-        - name: Backent folder content
-          run: ls -la backend
-
         - name: Reading HTML
           run: cat frontend/index.html
+
+    Editing:
+        runs-on: ubuntu-latest
+        steps:
+        - name: Checkout repo
+          uses: actions/checkout@v4
+
+        - name: Editing readme
+          uses: echo "2nd new line" >> README.md
+
+        - name: reading Readme 
+          run: cat README.md 
+          
+    Rereading:
+        runs-on: ubuntu-latest
+        steps:
+        - name: Checkout repo
+          uses: actions/checkout@v4
+
+        - name: Reading Readme 
+          run: cat README.md        
+
+
+
