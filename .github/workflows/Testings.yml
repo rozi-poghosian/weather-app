@@ -22,7 +22,7 @@ jobs:
             token: ${{ secrets.GITHUB_TOKEN }}
 
         - name: Editing readme
-          run: echo "\n new line on $(date)" >> README.md
+          run: echo -e "New line added on $(date)" >> README.md
 
         - name: reading Readme 
           run: cat README.md 
