@@ -1,0 +1,23 @@
+name: Testing 
+
+on:
+    workflow_dispatch
+
+jobs:
+    Reading:
+        runs-on: ubuntu-latest
+        steps:
+        - name: Checkout repo
+          uses: actions/checkout@v4
+
+        - name: Reading Readme 
+          run: cut README.md
+
+        - name: Frontent folder content
+          run: ls -la frontend
+
+        - name: Backent folder content
+          run: ls -la backend
+
+        - name: Reading HTML
+          run: cat frontend/index.html
