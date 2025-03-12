@@ -11,7 +11,7 @@ jobs:
           uses: actions/checkout@v4
 
         - name: Reading Readme 
-          run: cut README.md
+          run: cat README.md
 
         - name: Frontent folder content
           run: ls -la frontend
