@@ -19,11 +19,18 @@ jobs:
           username: ${{ secrets.GHCR_USERNAME }}  
           password: ${{ secrets.GHCR_TOKEN }} 
 
-      - name: Build Docker Image
-        run: docker build -t ghcr.io/${{ secrets.GHCR_USERNAME }}/weather-app:latest .
 
-      - name: Push Docker Image to GHCR
-        run: docker push ghcr.io/${{ secrets.GHCR_USERNAME }}/weather-app:latest
+      - name: Build Frontend Docker Image
+        run: docker build -t ghcr.io/${{ secrets.GHCR_USERNAME }}/weather-app-frontend:latest ./frontend
+
+      - name: Build Backend Docker Image
+        run: docker build -t ghcr.io/${{ secrets.GHCR_USERNAME }}/weather-app-backend:latest ./backend
+
+      - name: Push Frontend Docker Image to GHCR
+        run: docker push ghcr.io/${{ secrets.GHCR_USERNAME }}/weather-app-frontend:latest
+
+      - name: Push Backend Docker Image to GHCR
+        run: docker push ghcr.io/${{ secrets.GHCR_USERNAME }}/weather-app-backend:latest
 
   deploy:
     name: Deploy to K8s
@@ -42,8 +49,11 @@ jobs:
       - name: Create Namespace
         run: kubectl create namespace weather-app
 
-      - name: Deploy to Kubernetes
-        run: kubectl apply -f k8s/
+      - name: Deploy Frontend to Kubernetes
+        run: kubectl apply -f k8s/frontend/
+
+      - name: Deploy Backend to Kubernetes
+        run: kubectl apply -f k8s/backend/
 
       - name: Verify Deployment
         run: kubectl get pods -n weather-app
