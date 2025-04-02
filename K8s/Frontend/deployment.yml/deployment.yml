@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: weather-app-frontend
+  namespace: weather-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: weather-app-frontend
+  template:
+    metadata:
+      labels:
+        app: weather-app-frontend
+    spec:
+      containers:
+        - name: weather-app-frontend
+          image: ghcr.io/rozi-poghosian/weather-app-frontend:latest

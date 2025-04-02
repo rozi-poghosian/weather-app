@@ -50,10 +50,10 @@ jobs:
         run: kubectl create namespace weather-app
 
       - name: Deploy Frontend to Kubernetes
-        run: kubectl apply -f k8s/frontend/
+        run: kubectl apply -f K8s/Frontend/
 
       - name: Deploy Backend to Kubernetes
-        run: kubectl apply -f k8s/backend/
+        run: kubectl apply -f K8s/Backend/
 
       - name: Verify Deployment
         run: kubectl get pods -n weather-app
