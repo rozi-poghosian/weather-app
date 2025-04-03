@@ -41,6 +41,13 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      - name: Set Up SSH Key for Tunneling
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.MASTER_NODE_IP }} >> ~/.ssh/known_hosts
+
       - name: Setup Kubeconfig
         run: |
           mkdir -p $HOME/.kube
