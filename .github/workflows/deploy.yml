@@ -41,17 +41,12 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Set Up SSH Key for Tunneling
+      - name: Set Up SSH Key
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.MASTER_NODE_IP }} >> ~/.ssh/known_hosts
-
-      - name: Set Up SSH Tunnel to Kubernetes Master
-        run: |
-          # Set up the SSH tunnel to the Kubernetes master node
-          ssh -o StrictHostKeyChecking=no -f -N -L 6443:localhost:6443 root@${{ secrets.MASTER_NODE_IP }}
 
       - name: Setup Kubeconfig
         run: |
