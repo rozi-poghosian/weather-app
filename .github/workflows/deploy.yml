@@ -40,14 +40,6 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
-
-      - name: Set Up SSH Key
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H ${{ secrets.MASTER_NODE_IP }} >> ~/.ssh/known_hosts
-
       - name: Setup Kubeconfig
         run: |
           mkdir -p $HOME/.kube
@@ -55,7 +47,7 @@ jobs:
           chmod 600 $HOME/.kube/config
 
       - name: Create Namespace
-        run: kubectl create namespace weather-app
+        run: kubectl create namespace weather-app --v=9
 
       - name: Deploy Frontend to Kubernetes
         run: kubectl apply -f K8s/Frontend/
